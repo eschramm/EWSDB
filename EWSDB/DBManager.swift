@@ -607,14 +607,12 @@ public class DBManager {
             if FileManager.default.fileExists(atPath: filePath) {
                 database = FMDatabase(path: filePath)
             } else {
-                return createDatabase()
+                return createDatabase() && database.open()
             }
         }
         
         if database != nil {
-            if database.open() {
-                return true
-            }
+            return database.open()
         }
         return false
     }
