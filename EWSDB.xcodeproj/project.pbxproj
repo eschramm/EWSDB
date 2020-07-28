@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DA955A3224D09C640034A26F /* EWSDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA955A2824D09C640034A26F /* EWSDB.framework */; };
 		DA955A3724D09C640034A26F /* EWSDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A3624D09C640034A26F /* EWSDBTests.swift */; };
 		DA955A3924D09C640034A26F /* EWSDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA955A2B24D09C640034A26F /* EWSDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA955A4424D09D5E0034A26F /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA955A4324D09D5E0034A26F /* FMDB */; };
+		DA955A4624D09D700034A26F /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A4524D09D700034A26F /* DBManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,7 @@
 		DA955A3124D09C640034A26F /* EWSDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EWSDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA955A3624D09C640034A26F /* EWSDBTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EWSDBTests.swift; sourceTree = "<group>"; };
 		DA955A3824D09C640034A26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA955A4524D09D700034A26F /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA955A4424D09D5E0034A26F /* FMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +77,7 @@
 			children = (
 				DA955A2B24D09C640034A26F /* EWSDB.h */,
 				DA955A2C24D09C640034A26F /* Info.plist */,
+				DA955A4524D09D700034A26F /* DBManager.swift */,
 			);
 			path = EWSDB;
 			sourceTree = "<group>";
@@ -114,6 +119,9 @@
 			dependencies = (
 			);
 			name = EWSDB;
+			packageProductDependencies = (
+				DA955A4324D09D5E0034A26F /* FMDB */,
+			);
 			productName = EWSDB;
 			productReference = DA955A2824D09C640034A26F /* EWSDB.framework */;
 			productType = "com.apple.product-type.framework";
@@ -147,6 +155,7 @@
 				TargetAttributes = {
 					DA955A2724D09C640034A26F = {
 						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
 					};
 					DA955A3024D09C640034A26F = {
 						CreatedOnToolsVersion = 12.0;
@@ -162,6 +171,9 @@
 				Base,
 			);
 			mainGroup = DA955A1E24D09C640034A26F;
+			packageReferences = (
+				DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */,
+			);
 			productRefGroup = DA955A2924D09C640034A26F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -194,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA955A4624D09D700034A26F /* DBManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +354,7 @@
 		DA955A3D24D09C640034A26F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -356,6 +370,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericschramm.EWSDB;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +379,7 @@
 		DA955A3E24D09C640034A26F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -387,6 +403,7 @@
 		DA955A4024D09C640034A26F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = EWSDBTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -404,6 +421,7 @@
 		DA955A4124D09C640034A26F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = EWSDBTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -449,6 +467,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:ccgus/fmdb.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DA955A4324D09D5E0034A26F /* FMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */;
+			productName = FMDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DA955A1F24D09C640034A26F /* Project object */;
 }
