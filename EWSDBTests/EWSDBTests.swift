@@ -9,7 +9,7 @@ import XCTest
 @testable import EWSDB
 
 
-struct Person: DBModel {
+struct Person: DBModel, Equatable {
     
     static let firstNameField = DBField(keyName: "firstName", dbFieldName: nil, dataType: .text, constraints: [.notNull])
     static let lastNameField = DBField(keyName: "lastName", dbFieldName: nil, dataType: .text, constraints: [.notNull])
@@ -169,11 +169,22 @@ class EWSDBTests: XCTestCase {
     }
     
     func testFetch() throws {
-        let person = Person(firstName: "Eric", lastName: "Schramm", weight: 123.456, age: 41, timeStamp: Date())
+        var person = Person(firstName: "Eric", lastName: "Schramm", weight: 123.456, age: 41, timeStamp: Date())
         let saveResult = person.save(dbManager: dbManager) as Result<Person>
-        print(saveResult)
+        guard case .success(let savedPerson) = saveResult else {
+            XCTFail("Save unsuccessful for Person")
+            return
+        }
+        person = savedPerson
+        
         //test fetch by record - exists
         let foundResult: Result<[Person]> = Person.fetch(for: ["1"], dbManager: dbManager)
+        switch foundResult {
+        case .success(let foundPerson):
+            XCTAssertEqual(person, foundPerson[0])
+        case .error(let error):
+            XCTFail("Failed search - \(error)")
+        }
         if case .error(let errorString) = foundResult {
             XCTAssert(false, "This search should succeed - \(errorString)")
         }
