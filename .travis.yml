@@ -1,0 +1,31 @@
+language: swift
+osx_image: xcode12
+
+env:
+  #environment variables
+  global:
+    - WORKSPACE_NAME="EWSDB.xcodeproj"
+    #- SCHEME_MAC="EWSDB"
+    - SCHEME_IPHONE="EWSDB"
+    - SDK_IPHONE=iphonesimulator12.4
+    #- SDK_MAC=macosx10.14
+    #- DESTINATION_IOS="platform=iOS Simulator,name=iPhone 11,OS=14.0"
+    #- DESTINATION_MAC="platform=macOS,arch=x86_64,id=42044A08-8570-4C2D-BD4A-BB3EA7766E60"
+  matrix:
+    - OS=14.0 NAME="iPhone 11"
+    - OS=13.3 NAME="iPhone 11"
+    - OS=12.2 NAME="iPhone Xs"
+    - OS=11.4 NAME="iPhone X"
+
+before_install:
+  - brew install carthage || true
+
+before_script:
+  # bootstrap the dependencies for the project
+  - ./dependencies init
+
+script:
+  - set -o pipefail
+  - xcodebuild clean test -workspace "$WORKSPACE_NAME" -scheme "$SCHEME_IPHONE" -destination "platform=iOS Simulator,OS=$OS,name=$NAME" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO IS_TRAVIS_CI=true | xcpretty
+  # on hold while I figure out how to do code-signing on TravisCI
+  #- xcodebuild clean test -sdk "$SDK_MAC" -workspace "$WORKSPACE_NAME" -scheme "$SCHEME_MAC" -destination "$DESTINATION_MAC" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
