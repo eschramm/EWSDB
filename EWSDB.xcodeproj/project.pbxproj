@@ -10,8 +10,8 @@
 		DA955A3224D09C640034A26F /* EWSDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA955A2824D09C640034A26F /* EWSDB.framework */; };
 		DA955A3724D09C640034A26F /* EWSDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A3624D09C640034A26F /* EWSDBTests.swift */; };
 		DA955A3924D09C640034A26F /* EWSDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA955A2B24D09C640034A26F /* EWSDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA955A4424D09D5E0034A26F /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA955A4324D09D5E0034A26F /* FMDB */; };
 		DA955A4624D09D700034A26F /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A4524D09D700034A26F /* DBManager.swift */; };
+		DA9A3A4B24D1AFFF000CB90D /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA9A3A4A24D1AFFF000CB90D /* FMDB */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA955A4424D09D5E0034A26F /* FMDB in Frameworks */,
+				DA9A3A4B24D1AFFF000CB90D /* FMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +120,7 @@
 			);
 			name = EWSDB;
 			packageProductDependencies = (
-				DA955A4324D09D5E0034A26F /* FMDB */,
+				DA9A3A4A24D1AFFF000CB90D /* FMDB */,
 			);
 			productName = EWSDB;
 			productReference = DA955A2824D09C640034A26F /* EWSDB.framework */;
@@ -172,7 +172,7 @@
 			);
 			mainGroup = DA955A1E24D09C640034A26F;
 			packageReferences = (
-				DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */,
+				DA9A3A4924D1AFFF000CB90D /* XCRemoteSwiftPackageReference "fmdb" */,
 			);
 			productRefGroup = DA955A2924D09C640034A26F /* Products */;
 			projectDirPath = "";
@@ -471,9 +471,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */ = {
+		DA9A3A4924D1AFFF000CB90D /* XCRemoteSwiftPackageReference "fmdb" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:ccgus/fmdb.git";
+			repositoryURL = "https://github.com/ccgus/fmdb";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -482,9 +482,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DA955A4324D09D5E0034A26F /* FMDB */ = {
+		DA9A3A4A24D1AFFF000CB90D /* FMDB */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DA955A4224D09D5E0034A26F /* XCRemoteSwiftPackageReference "fmdb" */;
+			package = DA9A3A4924D1AFFF000CB90D /* XCRemoteSwiftPackageReference "fmdb" */;
 			productName = FMDB;
 		};
 /* End XCSwiftPackageProductDependency section */
