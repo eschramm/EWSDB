@@ -23,9 +23,13 @@ before_install:
 before_script:
   # bootstrap the dependencies for the project
   #- ./dependencies init
+  # see https://github.com/webfactory/ssh-agent/issues/4
+  - for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts
 
 script:
   - set -o pipefail
   - xcodebuild clean test -project "$WORKSPACE_NAME" -scheme "$SCHEME_IPHONE" -destination "platform=iOS Simulator,OS=$OS,name=$NAME" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO IS_TRAVIS_CI=true | xcpretty
   # on hold while I figure out how to do code-signing on TravisCI
   #- xcodebuild clean test -sdk "$SDK_MAC" -workspace "$WORKSPACE_NAME" -scheme "$SCHEME_MAC" -destination "$DESTINATION_MAC" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+
+xcodebuild clean test -project "EWSDB.xcodeproj" -scheme "EWSDB" -destination "platform=iOS Simulator,OS=14.0,name=iPhone 11" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO IS_TRAVIS_CI=true
