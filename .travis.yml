@@ -6,14 +6,14 @@ env:
   global:
     - WORKSPACE_NAME="EWSDB.xcodeproj"
     #- SCHEME_MAC="EWSDB"
-    - SCHEME_IPHONE="EWSDB"
+    - SCHEME_IPHONE="EWSDB_iOS"
     #- SDK_IPHONE=iphonesimulator12.4
     #- SDK_MAC=macosx10.14
     #- DESTINATION_IOS="platform=iOS Simulator,name=iPhone 11,OS=14.0"
     #- DESTINATION_MAC="platform=macOS,arch=x86_64,id=42044A08-8570-4C2D-BD4A-BB3EA7766E60"
   matrix:
     - OS=14.0 NAME="iPhone 11"
-    - OS=13.5 NAME="iPhone 11"
+    - OS=13.6 NAME="iPhone 11"
     - OS=12.4 NAME="iPhone Xs"
 
 before_install:

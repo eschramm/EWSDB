@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA955A3224D09C640034A26F /* EWSDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA955A2824D09C640034A26F /* EWSDB.framework */; };
+		DA73DA2024FD6FFC00FC9E9E /* EWSDB_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA73DA1724FD6FFC00FC9E9E /* EWSDB_Mac.framework */; };
+		DA73DA2524FD6FFC00FC9E9E /* EWSDB_MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA73DA2424FD6FFC00FC9E9E /* EWSDB_MacTests.swift */; };
+		DA73DA2724FD6FFC00FC9E9E /* EWSDB_Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = DA73DA1924FD6FFC00FC9E9E /* EWSDB_Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA73DA3024FD700F00FC9E9E /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA73DA2F24FD700F00FC9E9E /* FMDB */; };
+		DA73DA3124FD702100FC9E9E /* EWSDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A3624D09C640034A26F /* EWSDBTests.swift */; };
+		DA73DA3224FD702500FC9E9E /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A4524D09D700034A26F /* DBManager.swift */; };
+		DA955A3224D09C640034A26F /* EWSDB_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA955A2824D09C640034A26F /* EWSDB_iOS.framework */; };
 		DA955A3724D09C640034A26F /* EWSDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A3624D09C640034A26F /* EWSDBTests.swift */; };
 		DA955A3924D09C640034A26F /* EWSDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA955A2B24D09C640034A26F /* EWSDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA955A4624D09D700034A26F /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA955A4524D09D700034A26F /* DBManager.swift */; };
@@ -15,6 +21,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DA73DA2124FD6FFC00FC9E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA955A1F24D09C640034A26F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA73DA1624FD6FFC00FC9E9E;
+			remoteInfo = EWSDB_Mac;
+		};
 		DA955A3324D09C640034A26F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA955A1F24D09C640034A26F /* Project object */;
@@ -25,7 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA955A2824D09C640034A26F /* EWSDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EWSDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA73DA1724FD6FFC00FC9E9E /* EWSDB_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EWSDB_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA73DA1924FD6FFC00FC9E9E /* EWSDB_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EWSDB_Mac.h; sourceTree = "<group>"; };
+		DA73DA1A24FD6FFC00FC9E9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA73DA1F24FD6FFC00FC9E9E /* EWSDB_MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EWSDB_MacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA73DA2424FD6FFC00FC9E9E /* EWSDB_MacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EWSDB_MacTests.swift; sourceTree = "<group>"; };
+		DA73DA2624FD6FFC00FC9E9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA955A2824D09C640034A26F /* EWSDB_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EWSDB_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA955A2B24D09C640034A26F /* EWSDB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EWSDB.h; sourceTree = "<group>"; };
 		DA955A2C24D09C640034A26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA955A3124D09C640034A26F /* EWSDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EWSDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +54,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DA73DA1424FD6FFC00FC9E9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA73DA3024FD700F00FC9E9E /* FMDB in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA73DA1C24FD6FFC00FC9E9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA73DA2024FD6FFC00FC9E9E /* EWSDB_Mac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA955A2524D09C640034A26F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,27 +82,57 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA955A3224D09C640034A26F /* EWSDB.framework in Frameworks */,
+				DA955A3224D09C640034A26F /* EWSDB_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA73DA1824FD6FFC00FC9E9E /* EWSDB_Mac */ = {
+			isa = PBXGroup;
+			children = (
+				DA73DA1924FD6FFC00FC9E9E /* EWSDB_Mac.h */,
+				DA73DA1A24FD6FFC00FC9E9E /* Info.plist */,
+			);
+			path = EWSDB_Mac;
+			sourceTree = "<group>";
+		};
+		DA73DA2324FD6FFC00FC9E9E /* EWSDB_MacTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA73DA2424FD6FFC00FC9E9E /* EWSDB_MacTests.swift */,
+				DA73DA2624FD6FFC00FC9E9E /* Info.plist */,
+			);
+			path = EWSDB_MacTests;
+			sourceTree = "<group>";
+		};
+		DA73DA2E24FD700F00FC9E9E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DA955A1E24D09C640034A26F = {
 			isa = PBXGroup;
 			children = (
 				DA955A2A24D09C640034A26F /* EWSDB */,
 				DA955A3524D09C640034A26F /* EWSDBTests */,
+				DA73DA1824FD6FFC00FC9E9E /* EWSDB_Mac */,
+				DA73DA2324FD6FFC00FC9E9E /* EWSDB_MacTests */,
 				DA955A2924D09C640034A26F /* Products */,
+				DA73DA2E24FD700F00FC9E9E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		DA955A2924D09C640034A26F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA955A2824D09C640034A26F /* EWSDB.framework */,
+				DA955A2824D09C640034A26F /* EWSDB_iOS.framework */,
 				DA955A3124D09C640034A26F /* EWSDBTests.xctest */,
+				DA73DA1724FD6FFC00FC9E9E /* EWSDB_Mac.framework */,
+				DA73DA1F24FD6FFC00FC9E9E /* EWSDB_MacTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +159,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		DA73DA1224FD6FFC00FC9E9E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA73DA2724FD6FFC00FC9E9E /* EWSDB_Mac.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA955A2324D09C640034A26F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -105,9 +178,48 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		DA955A2724D09C640034A26F /* EWSDB */ = {
+		DA73DA1624FD6FFC00FC9E9E /* EWSDB_Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA955A3C24D09C640034A26F /* Build configuration list for PBXNativeTarget "EWSDB" */;
+			buildConfigurationList = DA73DA2824FD6FFC00FC9E9E /* Build configuration list for PBXNativeTarget "EWSDB_Mac" */;
+			buildPhases = (
+				DA73DA1224FD6FFC00FC9E9E /* Headers */,
+				DA73DA1324FD6FFC00FC9E9E /* Sources */,
+				DA73DA1424FD6FFC00FC9E9E /* Frameworks */,
+				DA73DA1524FD6FFC00FC9E9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EWSDB_Mac;
+			packageProductDependencies = (
+				DA73DA2F24FD700F00FC9E9E /* FMDB */,
+			);
+			productName = EWSDB_Mac;
+			productReference = DA73DA1724FD6FFC00FC9E9E /* EWSDB_Mac.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DA73DA1E24FD6FFC00FC9E9E /* EWSDB_MacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA73DA2B24FD6FFC00FC9E9E /* Build configuration list for PBXNativeTarget "EWSDB_MacTests" */;
+			buildPhases = (
+				DA73DA1B24FD6FFC00FC9E9E /* Sources */,
+				DA73DA1C24FD6FFC00FC9E9E /* Frameworks */,
+				DA73DA1D24FD6FFC00FC9E9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA73DA2224FD6FFC00FC9E9E /* PBXTargetDependency */,
+			);
+			name = EWSDB_MacTests;
+			productName = EWSDB_MacTests;
+			productReference = DA73DA1F24FD6FFC00FC9E9E /* EWSDB_MacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DA955A2724D09C640034A26F /* EWSDB_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA955A3C24D09C640034A26F /* Build configuration list for PBXNativeTarget "EWSDB_iOS" */;
 			buildPhases = (
 				DA955A2324D09C640034A26F /* Headers */,
 				DA955A2424D09C640034A26F /* Sources */,
@@ -118,12 +230,12 @@
 			);
 			dependencies = (
 			);
-			name = EWSDB;
+			name = EWSDB_iOS;
 			packageProductDependencies = (
 				DA9A3A4A24D1AFFF000CB90D /* FMDB */,
 			);
 			productName = EWSDB;
-			productReference = DA955A2824D09C640034A26F /* EWSDB.framework */;
+			productReference = DA955A2824D09C640034A26F /* EWSDB_iOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		DA955A3024D09C640034A26F /* EWSDBTests */ = {
@@ -153,6 +265,12 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					DA73DA1624FD6FFC00FC9E9E = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					DA73DA1E24FD6FFC00FC9E9E = {
+						CreatedOnToolsVersion = 12.0;
+					};
 					DA955A2724D09C640034A26F = {
 						CreatedOnToolsVersion = 12.0;
 						LastSwiftMigration = 1200;
@@ -178,13 +296,29 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA955A2724D09C640034A26F /* EWSDB */,
+				DA955A2724D09C640034A26F /* EWSDB_iOS */,
 				DA955A3024D09C640034A26F /* EWSDBTests */,
+				DA73DA1624FD6FFC00FC9E9E /* EWSDB_Mac */,
+				DA73DA1E24FD6FFC00FC9E9E /* EWSDB_MacTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DA73DA1524FD6FFC00FC9E9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA73DA1D24FD6FFC00FC9E9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA955A2624D09C640034A26F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,6 +336,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DA73DA1324FD6FFC00FC9E9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA73DA3224FD702500FC9E9E /* DBManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA73DA1B24FD6FFC00FC9E9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA73DA2524FD6FFC00FC9E9E /* EWSDB_MacTests.swift in Sources */,
+				DA73DA3124FD702100FC9E9E /* EWSDBTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA955A2424D09C640034A26F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,14 +372,113 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DA73DA2224FD6FFC00FC9E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA73DA1624FD6FFC00FC9E9E /* EWSDB_Mac */;
+			targetProxy = DA73DA2124FD6FFC00FC9E9E /* PBXContainerItemProxy */;
+		};
 		DA955A3424D09C640034A26F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA955A2724D09C640034A26F /* EWSDB */;
+			target = DA955A2724D09C640034A26F /* EWSDB_iOS */;
 			targetProxy = DA955A3324D09C640034A26F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		DA73DA2924FD6FFC00FC9E9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VM6VE536WY;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = EWSDB_Mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericschramm.EWSDB-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DA73DA2A24FD6FFC00FC9E9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VM6VE536WY;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = EWSDB_Mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericschramm.EWSDB-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		DA73DA2C24FD6FFC00FC9E9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VM6VE536WY;
+				INFOPLIST_FILE = EWSDB_MacTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericschramm.EWSDB-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DA73DA2D24FD6FFC00FC9E9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VM6VE536WY;
+				INFOPLIST_FILE = EWSDB_MacTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericschramm.EWSDB-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		DA955A3A24D09C640034A26F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -443,6 +693,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DA73DA2824FD6FFC00FC9E9E /* Build configuration list for PBXNativeTarget "EWSDB_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA73DA2924FD6FFC00FC9E9E /* Debug */,
+				DA73DA2A24FD6FFC00FC9E9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA73DA2B24FD6FFC00FC9E9E /* Build configuration list for PBXNativeTarget "EWSDB_MacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA73DA2C24FD6FFC00FC9E9E /* Debug */,
+				DA73DA2D24FD6FFC00FC9E9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DA955A2224D09C640034A26F /* Build configuration list for PBXProject "EWSDB" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -452,7 +720,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA955A3C24D09C640034A26F /* Build configuration list for PBXNativeTarget "EWSDB" */ = {
+		DA955A3C24D09C640034A26F /* Build configuration list for PBXNativeTarget "EWSDB_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA955A3D24D09C640034A26F /* Debug */,
@@ -484,6 +752,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DA73DA2F24FD700F00FC9E9E /* FMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA9A3A4924D1AFFF000CB90D /* XCRemoteSwiftPackageReference "fmdb" */;
+			productName = FMDB;
+		};
 		DA9A3A4A24D1AFFF000CB90D /* FMDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DA9A3A4924D1AFFF000CB90D /* XCRemoteSwiftPackageReference "fmdb" */;
