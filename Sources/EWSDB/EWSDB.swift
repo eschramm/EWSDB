@@ -11,6 +11,7 @@
 import Foundation
 import FMDB
 
+
 public typealias RecordID = String
 
 public protocol DBModel {
