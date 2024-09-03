@@ -34,6 +34,11 @@ public enum Success {
     case error(String)
 }
 
+public enum DBModelError: Error {
+    case databaseNotOpen
+    case unableToGetLastRowForInsertID
+}
+
 public extension DBModel {
     
     static func zIDfield() -> String {
@@ -116,8 +121,76 @@ public extension DBModel {
         return .error("Error deleting '\(Self.table.keyName) - no primary key (\(Self.zIDfield())")
     }
     
-    func save<T>(dbManager: DBManager) -> Result<T> {
+    func save(dbManager: DBManager) throws -> Self {
+        guard dbManager.openDatabase() else {
+            throw DBModelError.databaseNotOpen
+        }
         
+        defer {
+            dbManager.database.close()
+        }
+        
+        if let recordID = dataDictionary[Self.zIDfield()] as? RecordID {
+            var updateStatement = "UPDATE \(Self.table.dbTable()) SET "
+            let fields = Self.allFields().map { (field) -> String in
+                "\n\(field.dbField())=?"
+                }.joined(separator: ", ")
+            updateStatement += fields
+            updateStatement += " \nWHERE \(Self.zIDfield())=?"
+            var values = Self.allFields().map { (field) -> Any in
+                let value = dataDictionary[field.keyName]
+                if let date = value as? Date {
+                    return "\(dbManager.sqlDateFormatter.string(from: date))"
+                } else {
+                    return dataDictionary[field.keyName] ?? NSNull()
+                }
+            }
+            values.append(recordID)
+            try dbManager.database.executeUpdate(updateStatement, values: values)
+            updateCache(record: self, dbManager: dbManager)
+            return self
+        } else {
+            var updateStatement = "INSERT INTO \(Self.table.dbTable()) (\n"
+            var fields = [String]()
+            var questionMarks = [String]()
+            var values = [Any]()
+            for field in Self.allFields() {
+                fields.append(field.dbField())
+                questionMarks.append("?")
+                let value = dataDictionary[field.keyName]
+                if let date = value as? Date {
+                    values.append("\(dbManager.sqlDateFormatter.string(from: date))")
+                } else {
+                    values.append(dataDictionary[field.keyName] ?? NSNull())
+                }
+            }
+            updateStatement += fields.joined(separator: ", \n")
+            updateStatement += "\n)\nVALUES (\(questionMarks.joined(separator: ", ")));"
+            try dbManager.database.executeUpdate(updateStatement, values: values)
+            let rowIDresult = try dbManager.database.executeQuery("SELECT last_insert_rowid()", values: nil)
+            if rowIDresult.next() {
+                let id = RecordID(rowIDresult.int(forColumnIndex: 0))
+                var dataDict = [String : Any]()
+                for field in Self.allFields() {
+                    dataDict[field.keyName] = dataDictionary[field.keyName]
+                }
+                dataDict[Self.zIDfield()] = id
+                let record = Self.init(dataDictionary: dataDict)!
+                updateCache(record: record, dbManager: dbManager)
+                return record
+            } else {
+                throw DBModelError.unableToGetLastRowForInsertID
+            }
+        }
+    }
+    
+    func saveOld(dbManager: DBManager) -> Result<Self> {
+        do {
+            return .success(try save(dbManager: dbManager))
+        } catch {
+            return .error("\(error)")
+        }
+        /*
         guard dbManager.openDatabase() else {
             let errorString = "Database is not open, unable to save \(Self.table.keyName)"
             print(errorString)
@@ -196,7 +269,7 @@ public extension DBModel {
                 return Result.error(errorString)
             }
         }
-        return Result.error("Unknown error occurred")
+        return Result.error("Unknown error occurred")*/
     }
     
     private func updateCache(record: Self, dbManager: DBManager) {
@@ -214,8 +287,58 @@ public extension DBModel {
         dbManager.caches[Self.table.keyName] = cache
     }
     
-    static func fetch<T>(for IDs: [RecordID], dbManager: DBManager, skipCache: Bool = false) -> Result<[T]> {
+    static func fetch(for IDs: [RecordID], dbManager: DBManager, skipCache: Bool = false) throws -> [Self] {
+        let startTime = mach_absolute_time()
+        var faultedIDs = [RecordID]()
+        if !skipCache, let cache = dbManager.caches[table.keyName] {
+            for id in IDs {
+                if cache[id] == nil {
+                    faultedIDs.append(id)
+                } else {
+                    dbManager.cacheSaves += 1
+                }
+            }
+        } else {
+            faultedIDs = IDs
+        }
         
+        var cache: RecordCache
+        if let aCache = dbManager.caches[table.keyName] {
+            cache = aCache
+        } else {
+            cache = RecordCache()
+        }
+        
+        if !faultedIDs.isEmpty, dbManager.openDatabase() {
+            defer {
+                dbManager.database.close()
+            }
+            let queryQuestionMarks = String(repeating: "?, ", count: faultedIDs.count - 1) + "?"
+            let result = try dbManager.database.executeQuery("SELECT * FROM \(Self.table.dbTable()) WHERE \(zIDfield()) IN (\(queryQuestionMarks))", values: faultedIDs)
+            dbManager.queryCount += 1
+            while result.next() {
+                let recordAndID: RecordAndID<Self> = record(for: result, dbManager: dbManager)
+                if let record = recordAndID.record, let id = recordAndID.id {
+                    cache[id] = record
+                }
+            }
+            dbManager.caches[table.keyName] = cache
+        }
+        if dbManager.debugMode {
+            print("Query from IDs: '\(faultedIDs)'")
+            print("Cache Saves: \(IDs.count - faultedIDs.count)")
+            print("Query Time: \(timeStampDiff(start: startTime, end: mach_absolute_time()))")
+        }
+        return IDs.compactMap({ cache[$0] as? Self })
+    }
+    
+    static func fetchOld(for IDs: [RecordID], dbManager: DBManager, skipCache: Bool = false) -> Result<[Self]> {
+        do {
+            return .success(try fetch(for: IDs, dbManager: dbManager, skipCache: skipCache))
+        } catch {
+            return .error("\(error)")
+        }
+        /*
         let startTime = mach_absolute_time()
         var faultedIDs = [RecordID]()
         if !skipCache, let cache = dbManager.caches[table.keyName] {
@@ -266,11 +389,42 @@ public extension DBModel {
         }
         return Result.success(IDs.compactMap({ (recordID) -> T? in
             cache[recordID] as? T
-        }))
+        }))*/
     }
     
-    static func fetchIDs(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) -> Result<[RecordID]> {
+    static func fetchIDs(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) throws -> [RecordID] {
         guard dbManager.openDatabase()  else {
+            throw DBModelError.databaseNotOpen
+        }
+        defer {
+            dbManager.database.close()
+        }
+        let startTime = mach_absolute_time()
+        var ids = [RecordID]()
+        
+        let results = try dbManager.database.executeQuery(query, values: values)
+        dbManager.queryCount += 1
+        while(results.next()) {
+            if let id = results.string(forColumn: Self.zIDfield()) {
+                ids.append(id)
+            }
+        }
+        
+        if dbManager.debugMode {
+            print("Query IDs: '\(query)' with values '\(values)'")
+            print("Query Time: \(timeStampDiff(start: startTime, end: mach_absolute_time()))")
+        }
+        return ids
+    }
+    
+    static func fetchIDsOld(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) -> Result<[RecordID]> {
+        do {
+            return .success(try fetchIDs(for: query, values: values, dbManager: dbManager, skipCache: skipCache))
+        } catch {
+            return .error("\(error)")
+        }
+        /*
+         guard dbManager.openDatabase()  else {
             let errorString = "Error opening database - returning empty array of IDs"
             print(errorString)
             return .error(errorString)
@@ -297,11 +451,25 @@ public extension DBModel {
             print("Query IDs: '\(query)' with values '\(values)'")
             print("Query Time: \(timeStampDiff(start: startTime, end: mach_absolute_time()))")
         }
-        return .success(ids)
+        return .success(ids)*/
     }
     
-    static func fetch<T>(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) -> Result<[T]> {
+    static func fetch(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) throws -> [Self] {
         guard dbManager.openDatabase()  else {
+            throw DBModelError.databaseNotOpen
+        }
+        let ids = try fetchIDs(for: query, values: values, dbManager: dbManager, skipCache: skipCache)
+        return try fetch(for: ids, dbManager: dbManager, skipCache: skipCache)
+    }
+    
+    static func fetchOld(for query: String, values: [Any], dbManager: DBManager, skipCache: Bool = false) -> Result<[Self]> {
+        do {
+            return .success(try fetch(for: query, values: values, dbManager: dbManager, skipCache: skipCache))
+        } catch {
+            return .error("\(error)")
+        }
+        
+        /*guard dbManager.openDatabase()  else {
             let errorString = "Error opening database - returning empty array of \(Self.table.keyName)"
             print(errorString)
             return Result.error(errorString)
@@ -312,10 +480,10 @@ public extension DBModel {
             return fetch(for: ids, dbManager: dbManager, skipCache: skipCache)
         case .error(let error):
             return .error(error)
-        }
+        }*/
     }
     
-    static func record<T>(for result: FMResultSet, dbManager: DBManager) -> RecordAndID<T> {
+    static func record(for result: FMResultSet, dbManager: DBManager) -> RecordAndID<Self> {
         var dataDict = [String : Any]()
         for field in Self.allFields() {
             //check for nulls, first
@@ -348,7 +516,7 @@ public extension DBModel {
             }
             dataDict[field.keyName] = value
         }
-        let record = Self.init(dataDictionary: dataDict) as? T
+        let record = Self.init(dataDictionary: dataDict)
         let id = dataDict[zIDfieldKey()] as? RecordID
         return RecordAndID(record: record, id: id)
     }
