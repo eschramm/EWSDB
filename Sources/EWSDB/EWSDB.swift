@@ -10,6 +10,7 @@
 
 import Foundation
 import FMDB
+import SQLite3
 
 
 public typealias RecordID = String
@@ -688,6 +689,11 @@ public class DBManager {
     public let models: [DBModel.Type]
     public private(set) var database: FMDatabase!
     public var debugMode = false
+
+    /// When true, the database is opened with `SQLITE_OPEN_READONLY`. This avoids taking write
+    /// locks and avoids creating `-wal`/`-shm` sidecar files, so another application that owns
+    /// the file is not perturbed by our reading it. Table/database creation is unavailable.
+    public let readOnly: Bool
     var caches = [String : RecordCache]()
     public var cacheSaves = 0
     public var queryCount = 0
@@ -696,9 +702,10 @@ public class DBManager {
     
     public let sqlDateFormatter = DateFormatter()
     
-    public init(filePath: String, models: [DBModel.Type]) {
+    public init(filePath: String, models: [DBModel.Type], readOnly: Bool = false) {
         self.filePath = filePath
         self.models = models
+        self.readOnly = readOnly
         sqlDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         numberFormatter.numberStyle = .decimal
         populateNetworkedNoDeletion()
@@ -712,6 +719,10 @@ public class DBManager {
     public func createTable(model: DBModel.Type) -> Bool {
         guard database != nil else {
             print("database is null")
+            return false
+        }
+        guard !readOnly else {
+            print("Cannot create table \(model.table.dbTable()) - DBManager is read-only")
             return false
         }
         var created = false
@@ -771,17 +782,44 @@ public class DBManager {
         }
     }
     
+    /// Opens the connection, honoring ``readOnly``.
+    ///
+    /// Prefer this over calling `database.open()` directly — a bare `open()` always requests
+    /// read/write access, which would silently defeat ``readOnly``.
+    @discardableResult
+    public func openConnection() -> Bool {
+        guard let database else { return false }
+        if readOnly {
+            return database.open(withFlags: SQLITE_OPEN_READONLY)
+        } else {
+            return database.open()
+        }
+    }
+
+    /// Closes the connection, releasing the underlying sqlite handle and any file locks.
+    ///
+    /// Reads reopen on demand, so it is safe — and preferable — to leave the connection closed
+    /// whenever the database is not actively being queried. This matters when another
+    /// application owns the file and may replace it out from under an open handle.
+    public func closeConnection() {
+        database?.close()
+    }
+
     fileprivate func openDatabase() -> Bool {
         if database == nil {
             if FileManager.default.fileExists(atPath: filePath) {
                 database = FMDatabase(path: filePath)
             } else {
+                guard !readOnly else {
+                    print("Cannot create database at \(filePath) - DBManager is read-only")
+                    return false
+                }
                 return createDatabase() && database.open()
             }
         }
-        
+
         if database != nil {
-            return database.open()
+            return openConnection()
         }
         return false
     }
